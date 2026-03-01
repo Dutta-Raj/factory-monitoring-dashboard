@@ -1,298 +1,231 @@
-🏭 AI-Powered Worker Productivity Dashboard
+# 🏭 AI-Powered Worker Productivity Dashboard
 
 A full-stack factory monitoring dashboard that ingests AI-generated events from CCTV computer vision systems and visualizes worker and workstation productivity metrics.
 
-The system simulates a manufacturing factory with 6 workers and 6 workstations, processes AI activity events, and computes productivity metrics displayed in a dashboard.
+## 📋 **Live Demo**
+- **Frontend Dashboard**: [https://frontend-gold-nine-13.vercel.app/](https://frontend-gold-nine-13.vercel.app/)
+- **Backend API**: [https://factory-monitoring-dashboard.onrender.com](https://factory-monitoring-dashboard.onrender.com)
+- **API Documentation**: [https://factory-monitoring-dashboard.onrender.com/docs](https://factory-monitoring-dashboard.onrender.com/docs)
+- **GitHub Repository**: [https://github.com/Dutta-Raj/factory-monitoring-dashboard](https://github.com/Dutta-Raj/factory-monitoring-dashboard)
 
-📊 Dashboard Preview
+---
 
-Factory productivity metrics including:
+## ✨ **Features**
+- 📡 **AI Event Ingestion** - REST API that accepts JSON events from CCTV systems
+- 👷 **Worker Metrics** - Active time, idle time, utilization %, units produced, units/hour
+- 🏭 **Workstation Metrics** - Occupancy time, utilization %, production count, throughput rate
+- 📊 **Factory Analytics** - Total productive time, production count, average utilization, production rate
+- 🔄 **Auto Data Refresh** - Dashboard updates automatically to simulate real-time monitoring
 
-Worker utilization
+---
 
-Workstation production
+## 🛠 **Tech Stack**
+| Layer | Technology |
+|-------|------------|
+| **Backend** | FastAPI (Python) |
+| **Frontend** | React with Recharts |
+| **Database** | SQLite |
+| **Deployment** | Render (backend) + Vercel (frontend) |
+| **Containerization** | Docker & Docker Compose |
 
-Factory-level performance
+---
 
-Production rate monitoring
+## 📁 **Project Structure**
+factory-monitoring-dashboard/
+├── backend/
+│ ├── main.py
+│ ├── database.py
+│ ├── models.py
+│ ├── seed.py
+│ └── requirements.txt
+├── frontend/
+│ ├── src/
+│ │ ├── App.js
+│ │ ├── config.js
+│ │ └── ...
+│ ├── public/
+│ └── package.json
+├── docker-compose.yml
+├── Dockerfile
+├── README.md
+└── render.yaml
 
-✨ Features
-📡 AI Event Ingestion
+text
 
-Accepts AI-generated CCTV events
+---
 
-JSON-based event ingestion API
+## 🚀 **Local Setup Instructions**
 
-Supports activity types:
+### Prerequisites
+- Python 3.9+
+- Node.js 16+
+- npm
+- Git
 
-working
-
-idle
-
-absent
-
-product_count
-
-Example event:
-
-{
- "timestamp": "2026-01-15T10:15:00Z",
- "worker_id": "W1",
- "workstation_id": "S3",
- "event_type": "working",
- "confidence": 0.93,
- "count": 1
-}
-👷 Worker Productivity Metrics
-
-The system calculates:
-
-Total active time
-
-Total idle time
-
-Utilization percentage
-
-Total units produced
-
-Units produced per hour
-
-🏭 Workstation Metrics
-
-Each workstation shows:
-
-Occupancy time
-
-Utilization percentage
-
-Total production count
-
-Throughput rate
-
-🏢 Factory-Level Analytics
-
-Factory dashboard displays:
-
-Total productive time
-
-Total production count
-
-Average worker utilization
-
-Overall production rate
-
-🔄 Auto Data Refresh
-
-The dashboard automatically refreshes metrics periodically to simulate real-time factory monitoring systems.
-
-🛠 Tech Stack
-Backend
-
-Python
-
-FastAPI
-
-REST APIs
-
-Frontend
-
-React
-
-Recharts (charts)
-
-Axios
-
-Database
-
-SQLite
-
-Containerization
-
-Docker
-
-📁 Project Structure
-factory-monitoring-dashboard
-
-backend
-│
-├── main.py
-├── database.py
-├── models.py
-├── seed.py
-└── requirements.txt
-
-frontend
-│
-├── src
-├── public
-└── package.json
-
-Dockerfile
-docker-compose.yml
-README.md
-🚀 Local Setup Instructions
-Prerequisites
-
-Python 3.9+
-
-Node.js
-
-npm
-
-Git
-
-1️⃣ Clone Repository
+### 1️⃣ Clone Repository
+```bash
 git clone https://github.com/Dutta-Raj/factory-monitoring-dashboard.git
 cd factory-monitoring-dashboard
 2️⃣ Run Backend
+bash
 cd backend
-
 python -m venv venv
-venv\Scripts\activate
+venv\Scripts\activate  # Windows
+# source venv/bin/activate  # Mac/Linux
 
 pip install -r requirements.txt
+uvicorn main:app --reload
+Backend runs at: http://127.0.0.1:8000
 
-python -m uvicorn main:app --reload
-
-Backend runs at:
-
-http://127.0.0.1:8000
-
-API documentation:
-
-http://127.0.0.1:8000/docs
 3️⃣ Run Frontend
+bash
 cd frontend
-
 npm install
 npm start
+Frontend runs at: http://localhost:3000
 
-Frontend runs at:
-
-http://localhost:3000
+4️⃣ Initialize Database
+bash
+curl -X POST http://127.0.0.1:8000/api/refresh
 🐳 Docker Setup
-
-Run the full application using Docker.
-
+bash
 docker-compose up --build
-
-This will start:
-
-Backend API
-
-Frontend dashboard
-
-Database
+This starts both backend and frontend containers.
 
 ⚙️ System Architecture
+text
 AI CCTV Cameras
         ↓
 Computer Vision Model
         ↓
 Structured Event JSON
         ↓
-FastAPI Backend
+FastAPI Backend (Render)
         ↓
 SQLite Database
         ↓
 Metrics Engine
         ↓
-React Dashboard
-📡 Handling Intermittent Connectivity
+React Dashboard (Vercel)
+📡 API Endpoints
+Method	Endpoint	Description
+POST	/api/events	Ingest AI events
+GET	/api/metrics	Fetch all metrics
+POST	/api/refresh	Reset with sample data
+GET	/api/health	System health check
+Sample Event
+json
+{
+  "timestamp": "2026-03-02T10:15:00Z",
+  "worker_id": "W1",
+  "workstation_id": "S3",
+  "event_type": "working",
+  "confidence": 0.93,
+  "count": 1
+}
+📊 Metrics Calculated
+Worker Level
+Total Active Time: Time spent in "working" state
 
-Edge devices may temporarily lose connectivity.
-To address this:
+Total Idle Time: Time spent in "idle" state
 
-events are buffered locally
+Utilization %: (Active Time / Total Time) × 100
 
-data is sent when connection is restored
+Units Produced: Sum of product_count events
 
-timestamps ensure correct ordering
+Units Per Hour: Units / Active Time (hours)
 
-🔁 Handling Duplicate Events
+Workstation Level
+Occupancy Time: Total time worker present
 
-Duplicate events may occur due to network retries.
+Utilization %: (Occupied Time / Total Time) × 100
 
-The system handles this by:
+Units Produced: Sum of product_count at station
 
-validating event timestamps
+Throughput Rate: Units / Occupied Time (hours)
 
-filtering duplicate event IDs
+Factory Level
+Total Productive Time: Sum of all workers' active time
 
-idempotent API ingestion
+Total Production: Sum of all units produced
 
-⏱ Handling Out-of-Order Timestamps
+Average Production Rate: Total Units / Total Productive Time
 
-Edge devices may send delayed events.
+Average Utilization: Mean of workers' utilization
 
-The backend:
+🔧 Handling Edge Cases
+Intermittent Connectivity
+Edge devices buffer events locally when offline and send batched events when connection is restored. The backend accepts batches with timestamps and validates event order.
 
-sorts events by timestamp
+Duplicate Events
+Each event is checked against a cache of recent event signatures (timestamp + worker + workstation + type). Duplicates within 5 minutes are rejected.
 
-recalculates metrics if needed
+Out-of-Order Timestamps
+A buffer holds events for 30 seconds, sorts them by timestamp, then processes in correct order. Events older than 24 hours are rejected.
 
-maintains accurate productivity calculations
+🤖 Model Management
+Versioning
+Events include a model_version field. A model registry table tracks all deployed models with their metadata and performance metrics.
 
-🤖 Model Drift Detection
+Drift Detection
+Data Drift: Compare confidence score distributions using Jensen-Shannon divergence
 
-Computer vision models may degrade over time.
+Concept Drift: Monitor correlation between working events and actual production
 
-Drift can be detected using:
+Performance Drift: Compare against human-labeled ground truth (1% sample)
 
-abnormal confidence scores
+Retraining Triggers
+Drift score > 0.15 for 3 consecutive days
 
-sudden productivity pattern changes
+Production correlation < 0.7 for 24 hours
 
-anomaly detection pipelines
+Weekly scheduled retraining
 
-Retraining can be triggered using updated factory datasets.
+Manual trigger via admin UI
 
-📈 Scaling to 100+ Cameras
+📈 Scaling Strategy
+5 → 100+ Cameras
+Scale	Architecture
+5-10 cameras	Single FastAPI + SQLite
+10-50 cameras	Load balancer + multiple API servers + PostgreSQL
+50-500 cameras	Kafka event streaming + TimescaleDB + Spark streaming
+Multi-Site
+Each factory runs its own local cluster (Kafka + TimescaleDB). Daily snapshots sync to a central data lake for global analytics. The HQ dashboard shows aggregated metrics across all sites.
 
-To support large factories:
+🚀 Deployment
+Backend (Render)
+Connected to GitHub for auto-deploys
 
-Horizontal Backend Scaling
+Environment variables set in dashboard
 
-Multiple API servers behind a load balancer.
+Root directory: /backend
 
-Message Queues
+Build command: pip install -r requirements.txt
 
-Use systems like:
+Start command: uvicorn main:app --host 0.0.0.0 --port $PORT
 
-Kafka
+Frontend (Vercel)
+Connected to GitHub
 
-RabbitMQ
+Root directory: /frontend
 
-for large event pipelines.
-
-Distributed Databases
-
-Use scalable databases such as:
-
-PostgreSQL
-
-TimescaleDB
-
-Cassandra
-
-Stream Processing
-
-Use:
-
-Apache Spark
-
-Apache Flink
-
-for real-time analytics.
+Environment variable: REACT_APP_API_URL=https://factory-monitoring-dashboard.onrender.com
 
 📌 Future Improvements
-
 Real camera integration
 
 Worker safety alerts
 
-AI anomaly detection
+Predictive maintenance
 
-Predictive maintenance analytics
+Mobile app for supervisors
 
-Multi-factory monitoring
+Custom report builder
+
+Email/SMS alerts
+
+📬 Contact
+Rajdeep Dutta
+Email: rajdeepdutta104@gmail.com
+GitHub: github.com/Dutta-Raj
+
